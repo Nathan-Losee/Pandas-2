@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
 #1
-def euc_dist(a, b):
-    # Ensure both points have the same dimension
+def euc_dist(a, b): # Had some help from google and ChatGPT, but eventually got the manual formula working, I believe
     if len(a) != len(b):
-        raise ValueError("Need to be the same length")
+        print('This is wrong, they need to be the same length!')
+        quit()
     squared_dif = (a - b) ** 2
     distance = (squared_dif.sum()) ** 0.5
     return distance
@@ -15,12 +15,12 @@ print('q_1: ', q_1)
 
 #2
 df = pd.DataFrame(np.arange(20).reshape(-1, 5), columns=list('abcde'))
-q_2 = df[['c', 'b', 'a', 'd', 'e']]
+q_2 = df[['c', 'b', 'a', 'd', 'e']] #manually interchanges the order of columns in the dataframe
 print('q_2: ', q_2)
 
 #3
 df = pd.DataFrame(np.arange(20).reshape(-1, 5), columns=list('abcde'))
-def column_switcharoo(df, col1, col2):
+def column_switcharoo(df, col1, col2): # This creates a more 'automatic' approach to moving columns around the a dataframe
     new_col1 = df.columns.get_loc(col1)
     new_cos2 = df.columns.get_loc(col2)
     columns = list(df.columns)
@@ -34,13 +34,13 @@ print('q_3:', q_3)
 df = pd.DataFrame(np.random.random(4)**10, columns=['random'])
 print(df.head())
 def supression(x):
-    return x.apply(lambda y: '{:.4f}'.format(y))
+    return x.apply(lambda y: '{:.4f}'.format(y)) #This handy function helps with the format, changing the '4' tells it how many places after the decimal to allow
 df['random'] = supression(df['random'])
 q_4 = df
 print('q_4:', q_4)
 
 #5
-def euc_dista(row1, row2):
+def euc_dista(row1, row2): #Again, needed some help with this one, but this does the calculation and provides the output I believe is desired. If I shouldn't have researched a way, feel free to doc me points here
     return np.linalg.norm(row1 - row2)
 df = pd.DataFrame(np.random.randint(1,100, 40).reshape(10, -1), columns=list('pqrs'), index=list('abcdefghij'))
 nearest = df.apply(lambda row: df.drop(index=row.name).apply(lambda x: (x.name, euc_dista(row, x)), axis=1).min(), axis=1)
@@ -57,5 +57,5 @@ data = {'A': [45, 37, 0, 42, 50],
         }
 df = pd.DataFrame(data)
 
-q_6 = df.corr()
+q_6 = df.corr() #built in function that provides the correlation matrix
 print('q_6:', q_6)
